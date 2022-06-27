@@ -59,13 +59,13 @@ export const quizReducer = (state, action) => {
       const { currentQuestion, answer } = action.payload;
       const queArr = /(\d+)(\D)(\d+)/gm.exec(currentQuestion);
       const correctAns = calArray([queArr[1], queArr[2], queArr[3]]);
-      const currQue = Number(localStorage.getItem("currentQue_Quiz1"));
-      localStorage.setItem("currentQue_Quiz1", currQue + 1);
+      const currQue = JSON.parse(localStorage.getItem("quizData")).quiz1.currentQue;
+
       return {
         ...state,
         quiz1: {
           ...state.quiz1,
-          currentQue: currQue,
+          currentQue: +state.quiz1.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
           score: correctAns === Number(answer) ? state.quiz1.score + 10 : state.quiz1.score,
           selectedQuestions: [
             ...state.quiz1.selectedQuestions,
@@ -82,13 +82,13 @@ export const quizReducer = (state, action) => {
       const { currentQuestion, answer } = action.payload;
       const queArr = /(\d+)(\D)(\d+)/gm.exec(currentQuestion);
       const correctAns = calArray([queArr[1], queArr[2], queArr[3]]);
-      const currQue = Number(localStorage.getItem("currentQue_Quiz2"));
-      localStorage.setItem("currentQue_Quiz2", currQue + 1);
+      const currQue = JSON.parse(localStorage.getItem("quizData")).quiz2.currentQue;
+
       return {
         ...state,
         quiz2: {
           ...state.quiz2,
-          currentQue: currQue,
+          currentQue: +state.quiz2.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
           score: correctAns === Number(answer) ? state.quiz2.score + 10 : state.quiz2.score,
           selectedQuestions: [
             ...state.quiz2.selectedQuestions,

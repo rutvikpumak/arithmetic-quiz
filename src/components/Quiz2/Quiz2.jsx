@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuiz } from "../../context/quiz-context";
 import { QuizCard } from "../QuizCard/QuizCard";
+
 const OPERATORS = ["+", "-", "*", "/"];
 
 export function Quiz2() {
@@ -23,7 +24,6 @@ export function Quiz2() {
   const startQuizHandler = () => {
     const { noOfQue, operand, operators } = formDetails;
     if (noOfQue > 0 && operand > 0 && operators.length > 0) {
-      localStorage.setItem("currentQue_Quiz2", 0);
       dispatch({ type: "UPDATE_QUIZ2", payload: { noOfQue, operand, operators } });
     } else {
       alert("Fill all the fields");
