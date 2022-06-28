@@ -1,6 +1,7 @@
 import { calArray, queGenerator } from "../utils/queGenerator";
 
 export const initialState = {
+  cumulativeScore: 0,
   quiz1: {
     currentQue: 0,
     noOfQuestion: 0,
@@ -63,6 +64,8 @@ export const quizReducer = (state, action) => {
 
       return {
         ...state,
+        cumulativeScore:
+          correctAns === Number(answer) ? state.cumulativeScore + 10 : state.cumulativeScore,
         quiz1: {
           ...state.quiz1,
           currentQue: +state.quiz1.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
@@ -86,6 +89,8 @@ export const quizReducer = (state, action) => {
 
       return {
         ...state,
+        cumulativeScore:
+          correctAns === Number(answer) ? state.cumulativeScore + 10 : state.cumulativeScore,
         quiz2: {
           ...state.quiz2,
           currentQue: +state.quiz2.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
@@ -106,6 +111,7 @@ export const quizReducer = (state, action) => {
       localStorage.clear("currentQue_Quiz1");
       return {
         ...state,
+        cumulativeScore: state.cumulativeScore - state.quiz1.score,
         quiz1: {
           currentQue: 0,
           noOfQuestion: 0,
@@ -122,6 +128,7 @@ export const quizReducer = (state, action) => {
       localStorage.clear("currentQue_Quiz2");
       return {
         ...state,
+        cumulativeScore: state.cumulativeScore - state.quiz2.score,
         quiz2: {
           currentQue: 0,
           noOfQuestion: 0,

@@ -23,10 +23,22 @@ export function Quiz2() {
 
   const startQuizHandler = () => {
     const { noOfQue, operand, operators } = formDetails;
-    if (noOfQue > 0 && operand > 0 && operators.length > 0) {
-      dispatch({ type: "UPDATE_QUIZ2", payload: { noOfQue, operand, operators } });
+    if (noOfQue !== 0 && (noOfQue < 1 || noOfQue > 20)) {
+      alert("Number of Question should be between 1 to 20");
+    }
+    if (operand !== 0 && (operand < 0 || operand > 15)) {
+      alert("Operand should be between 1 to 15");
     } else {
-      alert("Fill all the fields");
+      if (noOfQue > 0 && noOfQue <= 20 && operand > 0 && operand <= 15 && operators.length > 0) {
+        dispatch({ type: "UPDATE_QUIZ1", payload: { noOfQue, operand, operators } });
+        setFormDetails({
+          noOfQue: 0,
+          operand: 0,
+          operators: [],
+        });
+      } else if (noOfQue === 0 || operand === 0 || operators.length === 0) {
+        alert("Fill all the fields");
+      }
     }
   };
 
