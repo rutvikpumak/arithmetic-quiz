@@ -5,10 +5,12 @@ export function QuizResult({ quizNo }) {
   const { state, dispatch } = useQuiz();
   const [quizData, setQuizData] = useState(state[`quiz${quizNo}`]);
 
+  //effect to get and set quizData to local state
   useEffect(() => {
     setQuizData(state[`quiz${quizNo}`]);
   }, [state]);
 
+  //function to start quiz again once finished
   const startAgainHandler = () => {
     dispatch({ type: `RESET_QUIZ${quizNo}` });
   };
@@ -35,18 +37,17 @@ export function QuizResult({ quizNo }) {
                 {index + 1}) {question}
               </p>
               <p className="text-center bg-green-500 text-white font-bold rounded-lg my-2">
-                Correct Answer : {quizData.selectedQuestions[index]?.correctAns}
+                Correct Answer : {quizData.answers[index]?.correctAns}
               </p>
-              {quizData.selectedQuestions[index]?.answer === "" ? (
+              {quizData.answers[index]?.answer === "" ? (
                 <p className="text-center bg-orange-400 text-white font-bold rounded-lg px-2">
                   Option Not Selected
                 </p>
               ) : (
-                +quizData.selectedQuestions[index]?.answer !==
-                  quizData.selectedQuestions[index]?.correctAns && (
+                +quizData.answers[index]?.answer !== quizData.answers[index]?.correctAns && (
                   <div>
                     <p className="text-center bg-red-500 text-white font-bold rounded-lg px-2">
-                      Your Answer : {quizData.selectedQuestions[index]?.answer}
+                      Your Answer : {quizData.answers[index]?.answer}
                     </p>
                   </div>
                 )

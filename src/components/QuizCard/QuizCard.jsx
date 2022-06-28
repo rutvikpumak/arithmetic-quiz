@@ -10,6 +10,7 @@ export function QuizCard({ quizNo }) {
   const [showResult, setShowResult] = useState(false);
   let intervalId;
 
+  //this effect will run when there is change in state and also update state in localStorage
   useEffect(() => {
     localStorage.setItem("quizData", JSON.stringify(state));
     setCurrentQuestion(
@@ -18,16 +19,16 @@ export function QuizCard({ quizNo }) {
           JSON.parse(localStorage.getItem("quizData"))[`quiz${quizNo}`].currentQue
       ]
     );
-  }, [state, quizNo]);
+  }, [state]);
 
+  //this effect will run when if user refresh page when any particular quiz is on result page
   useEffect(() => {
-    if (
-      state[`quiz${quizNo}`]?.questions.length === state[`quiz${quizNo}`]?.selectedQuestions.length
-    ) {
+    if (state[`quiz${quizNo}`]?.questions.length === state[`quiz${quizNo}`]?.answers.length) {
       setShowResult(true);
     }
   }, []);
 
+  //function to move to next question with storing answer and calculating score
   const nextHandler = () => {
     dispatch({ type: `NEXT_QUE_QUIZ${quizNo}`, payload: { currentQuestion, answer } });
     setAnswer("");
@@ -39,6 +40,7 @@ export function QuizCard({ quizNo }) {
     }
   };
 
+  //function to reset the particular quiz
   const resetHandler = () => {
     dispatch({ type: `RESET_QUIZ${quizNo}` });
     setAnswer("");
@@ -46,6 +48,7 @@ export function QuizCard({ quizNo }) {
     setShowResult(false);
   };
 
+  //this effect will use for timer of a question
   useEffect(() => {
     intervalId = setInterval(() => {
       if (seconds > 0) {
@@ -65,7 +68,7 @@ export function QuizCard({ quizNo }) {
 
   return showResult &&
     state[`quiz${quizNo}`]?.currentQue + 1 === +state[`quiz${quizNo}`]?.noOfQuestion ? (
-    <QuizResult quizNo={quizNo} />
+    <QuizResult quizNo={quizNo} /> //Rendering result page when question reaches to an end
   ) : (
     <div className="flex flex-col m-4 py-2 px-4 gap-4">
       <p className="text-center font-bold text-xl underline underline-offset-4">

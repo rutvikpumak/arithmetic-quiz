@@ -1,3 +1,4 @@
+//function to calculate answers of questions
 export function calArray(arr) {
   let com = null;
   switch (arr[1]) {
@@ -19,6 +20,7 @@ export function calArray(arr) {
   return com;
 }
 
+//function to generator random no of question based on inputs given by user
 export function queGenerator(numOfQue, operand, operators, quizNumber) {
   let queArr = [];
   if (numOfQue > 1) {

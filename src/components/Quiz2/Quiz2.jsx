@@ -12,6 +12,7 @@ export function Quiz2() {
     operators: [],
   });
 
+  //function to checked unchecked operators
   const toggleOperator = (e) => {
     setFormDetails({
       ...formDetails,
@@ -21,6 +22,7 @@ export function Quiz2() {
     });
   };
 
+  //function to start quiz
   const startQuizHandler = () => {
     const { noOfQue, operand, operators } = formDetails;
     if (noOfQue !== 0 && (noOfQue < 1 || noOfQue > 20)) {
@@ -92,7 +94,7 @@ export function Quiz2() {
           </div>
         </>
       ) : (
-        <QuizCard quizNo="2" />
+        <QuizCard quizNo="2" /> //rendering quiz question component when quiz started
       )}
     </div>
   );

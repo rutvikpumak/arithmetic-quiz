@@ -8,7 +8,7 @@ export const initialState = {
     operand: 0,
     operator: [],
     questions: [],
-    selectedQuestions: [],
+    answers: [],
     score: 0,
   },
   quiz2: {
@@ -17,7 +17,7 @@ export const initialState = {
     operand: 0,
     operator: [],
     questions: [],
-    selectedQuestions: [],
+    answers: [],
     score: 0,
   },
 };
@@ -25,6 +25,7 @@ export const initialState = {
 export const quizReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_QUIZ1": {
+      //case to update value input by user at start of quiz and update it in state
       const { noOfQue, operand, operators } = action.payload;
       return {
         ...state,
@@ -35,12 +36,13 @@ export const quizReducer = (state, action) => {
           operator: operators,
           questions:
             JSON.parse(localStorage.getItem("quiz-1")) ||
-            queGenerator(noOfQue, operand, operators, 1),
+            queGenerator(noOfQue, operand, operators, 1), //call to function which generator random que based on input
         },
       };
     }
 
     case "UPDATE_QUIZ2": {
+      //case to update value input by user at start of quiz2 and update it in state
       const { noOfQue, operand, operators } = action.payload;
       return {
         ...state,
@@ -51,15 +53,17 @@ export const quizReducer = (state, action) => {
           operator: operators,
           questions:
             JSON.parse(localStorage.getItem("quiz-2")) ||
-            queGenerator(noOfQue, operand, operators, 2),
+            queGenerator(noOfQue, operand, operators, 2), //call to function which generator random que based on input
         },
       };
     }
 
     case "NEXT_QUE_QUIZ1": {
+      //case to update quiz1 state based in prev question input
+
       const { currentQuestion, answer } = action.payload;
-      const queArr = /(\d+)(\D)(\d+)/gm.exec(currentQuestion);
-      const correctAns = calArray([queArr[1], queArr[2], queArr[3]]);
+      const queArr = /(\d+)(\D)(\d+)/gm.exec(currentQuestion); //extracting value from question using regex
+      const correctAns = calArray([queArr[1], queArr[2], queArr[3]]); //call to cal value function based on value
       const currQue = JSON.parse(localStorage.getItem("quizData")).quiz1.currentQue;
 
       return {
@@ -70,8 +74,8 @@ export const quizReducer = (state, action) => {
           ...state.quiz1,
           currentQue: +state.quiz1.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
           score: correctAns === Number(answer) ? state.quiz1.score + 10 : state.quiz1.score,
-          selectedQuestions: [
-            ...state.quiz1.selectedQuestions,
+          answers: [
+            ...state.quiz1.answers,
             {
               correctAns,
               answer,
@@ -82,10 +86,12 @@ export const quizReducer = (state, action) => {
     }
 
     case "NEXT_QUE_QUIZ2": {
+      //case to update quiz1 state based in prev question input
+
       const { currentQuestion, answer } = action.payload;
       const queArr = /(\d+)(\D)(\d+)/gm.exec(currentQuestion);
-      const correctAns = calArray([queArr[1], queArr[2], queArr[3]]);
-      const currQue = JSON.parse(localStorage.getItem("quizData")).quiz2.currentQue;
+      const correctAns = calArray([queArr[1], queArr[2], queArr[3]]); //extracting value from question using regex
+      const currQue = JSON.parse(localStorage.getItem("quizData")).quiz2.currentQue; //call to cal value function based on
 
       return {
         ...state,
@@ -95,8 +101,8 @@ export const quizReducer = (state, action) => {
           ...state.quiz2,
           currentQue: +state.quiz2.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
           score: correctAns === Number(answer) ? state.quiz2.score + 10 : state.quiz2.score,
-          selectedQuestions: [
-            ...state.quiz2.selectedQuestions,
+          answers: [
+            ...state.quiz2.answers,
             {
               correctAns,
               answer,
@@ -106,7 +112,7 @@ export const quizReducer = (state, action) => {
       };
     }
 
-    case "RESET_QUIZ1":
+    case "RESET_QUIZ1": // case to reset quiz1
       localStorage.clear("quiz-1");
       localStorage.clear("currentQue_Quiz1");
       return {
@@ -118,12 +124,12 @@ export const quizReducer = (state, action) => {
           operand: 0,
           operator: [],
           questions: [],
-          selectedQuestions: [],
+          answers: [],
           score: 0,
         },
       };
 
-    case "RESET_QUIZ2":
+    case "RESET_QUIZ2": // case to reset quiz2
       localStorage.clear("quiz-2");
       localStorage.clear("currentQue_Quiz2");
       return {
@@ -135,7 +141,7 @@ export const quizReducer = (state, action) => {
           operand: 0,
           operator: [],
           questions: [],
-          selectedQuestions: [],
+          answers: [],
           score: 0,
         },
       };
