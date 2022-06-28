@@ -1,6 +1,5 @@
 import "./App.css";
 import { Quiz1, Quiz2 } from "./components";
-import { QuizCard } from "./components/QuizCard/QuizCard";
 
 function App() {
   return (

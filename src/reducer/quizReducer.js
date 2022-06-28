@@ -132,5 +132,8 @@ export const quizReducer = (state, action) => {
           score: 0,
         },
       };
+
+    default:
+      return state;
   }
 };

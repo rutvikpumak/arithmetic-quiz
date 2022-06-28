@@ -64,7 +64,9 @@ export function QuizCard({ quizNo }) {
         <p>
           {state[`quiz${quizNo}`]?.currentQue + 1}) {currentQuestion} ?
         </p>
-        <p className="">Timer : {seconds}</p>
+        <p className="">
+          Timer : <span className={`${seconds < 6 && "text-red-600"}`}>{seconds}</span>
+        </p>
       </div>
       <div className="flex items-center">
         <span>Enter your answer :</span>
