@@ -57,8 +57,8 @@ export function Quiz1() {
             <div>
               <span className="font-bold">*Select Operator : </span>
               <div className="flex-row gap-8 inline-flex">
-                {OPERATORS.map((operator) => (
-                  <label className="cursor-pointer">
+                {OPERATORS.map((operator, index) => (
+                  <label key={operator + index} className="cursor-pointer">
                     <input
                       className="mr-2"
                       type="checkbox"
