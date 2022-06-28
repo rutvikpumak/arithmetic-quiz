@@ -69,11 +69,16 @@ export const quizReducer = (state, action) => {
       return {
         ...state,
         cumulativeScore:
-          correctAns === Number(answer) ? state.cumulativeScore + 10 : state.cumulativeScore,
+          (+correctAns).toFixed(2) === (+answer).toFixed(2)
+            ? state.cumulativeScore + 10
+            : state.cumulativeScore,
         quiz1: {
           ...state.quiz1,
           currentQue: +state.quiz1.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
-          score: correctAns === Number(answer) ? state.quiz1.score + 10 : state.quiz1.score,
+          score:
+            (+correctAns).toFixed(2) === (+answer).toFixed(2)
+              ? state.quiz1.score + 10
+              : state.quiz1.score,
           answers: [
             ...state.quiz1.answers,
             {
@@ -96,11 +101,16 @@ export const quizReducer = (state, action) => {
       return {
         ...state,
         cumulativeScore:
-          correctAns === Number(answer) ? state.cumulativeScore + 10 : state.cumulativeScore,
+          (+correctAns).toFixed(2) === (+answer).toFixed(2)
+            ? state.cumulativeScore + 10
+            : state.cumulativeScore,
         quiz2: {
           ...state.quiz2,
           currentQue: +state.quiz2.noOfQuestion === currQue + 1 ? currQue : currQue + 1,
-          score: correctAns === Number(answer) ? state.quiz2.score + 10 : state.quiz2.score,
+          score:
+            (+correctAns).toFixed(2) === (+answer).toFixed(2)
+              ? state.quiz2.score + 10
+              : state.quiz2.score,
           answers: [
             ...state.quiz2.answers,
             {

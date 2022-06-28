@@ -23,7 +23,7 @@ export function QuizCard({ quizNo }) {
 
   //this effect will run when if user refresh page when any particular quiz is on result page
   useEffect(() => {
-    if (state[`quiz${quizNo}`]?.questions.length === state[`quiz${quizNo}`]?.answers.length) {
+    if (state[`quiz${quizNo}`]?.questions?.length === state[`quiz${quizNo}`]?.answers?.length) {
       setShowResult(true);
     }
   }, []);

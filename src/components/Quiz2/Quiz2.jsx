@@ -32,7 +32,7 @@ export function Quiz2() {
       alert("Operand should be between 1 to 15");
     } else {
       if (noOfQue > 0 && noOfQue <= 20 && operand > 0 && operand <= 15 && operators.length > 0) {
-        dispatch({ type: "UPDATE_QUIZ1", payload: { noOfQue, operand, operators } });
+        dispatch({ type: "UPDATE_QUIZ2", payload: { noOfQue, operand, operators } });
         setFormDetails({
           noOfQue: 0,
           operand: 0,
