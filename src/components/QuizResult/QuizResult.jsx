@@ -3,13 +3,15 @@ import { useQuiz } from "../../context/quiz-context";
 
 export function QuizResult({ quizNo }) {
   const { state, dispatch } = useQuiz();
-  const [quizData, setQuizData] = useState(
-    JSON.parse(localStorage.getItem("quizData"))[`quiz${quizNo}`]
-  );
+  const [quizData, setQuizData] = useState(state[`quiz${quizNo}`]);
 
   useEffect(() => {
-    setQuizData(JSON.parse(localStorage.getItem("quizData"))[`quiz${quizNo}`]);
+    setQuizData(state[`quiz${quizNo}`]);
   }, [state]);
+
+  const startAgainHandler = () => {
+    dispatch({ type: `RESET_QUIZ${quizNo}` });
+  };
 
   return (
     quizData && (
@@ -18,7 +20,7 @@ export function QuizResult({ quizNo }) {
           <p className="text-2xl font-bold text-blue-500 text-center mb-4">Quiz {quizNo} Result</p>
           <button
             className="bg-blue-500 text-white font-bold text-base px-2 py-0.5 rounded-md mt-4 hover:bg-blue-400"
-            onClick={() => dispatch({ type: `RESET_QUIZ${quizNo}` })}
+            onClick={() => startAgainHandler()}
           >
             Start Again
           </button>

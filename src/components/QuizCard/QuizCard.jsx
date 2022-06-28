@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuiz } from "../../context/quiz-context";
 import { QuizResult } from "../QuizResult/QuizResult";
 
@@ -8,6 +8,7 @@ export function QuizCard({ quizNo }) {
   const [answer, setAnswer] = useState("");
   const [seconds, setSeconds] = useState(20);
   const [showResult, setShowResult] = useState(false);
+  let intervalId;
 
   useEffect(() => {
     localStorage.setItem("quizData", JSON.stringify(state));
@@ -17,12 +18,21 @@ export function QuizCard({ quizNo }) {
           JSON.parse(localStorage.getItem("quizData"))[`quiz${quizNo}`].currentQue
       ]
     );
-  }, [state]);
+  }, [state, quizNo]);
+
+  useEffect(() => {
+    if (
+      state[`quiz${quizNo}`]?.questions.length === state[`quiz${quizNo}`]?.selectedQuestions.length
+    ) {
+      setShowResult(true);
+    }
+  }, []);
 
   const nextHandler = () => {
     dispatch({ type: `NEXT_QUE_QUIZ${quizNo}`, payload: { currentQuestion, answer } });
     setAnswer("");
     if (state[`quiz${quizNo}`]?.currentQue + 1 === +state[`quiz${quizNo}`]?.noOfQuestion) {
+      clearInterval(intervalId);
       setShowResult(true);
     } else {
       setSeconds(20);
@@ -37,7 +47,7 @@ export function QuizCard({ quizNo }) {
   };
 
   useEffect(() => {
-    let intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
       }
@@ -53,7 +63,8 @@ export function QuizCard({ quizNo }) {
     };
   }, [seconds]);
 
-  return showResult ? (
+  return showResult &&
+    state[`quiz${quizNo}`]?.currentQue + 1 === +state[`quiz${quizNo}`]?.noOfQuestion ? (
     <QuizResult quizNo={quizNo} />
   ) : (
     <div className="flex flex-col m-4 py-2 px-4 gap-4">
